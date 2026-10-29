@@ -13,7 +13,7 @@ const shellURL = new URL('../src/commands/shell.mjs', import.meta.url).href;
 // stream chunks. No fixture invokes Claude or touches the user's profile data.
 function runPicker({ keys = ['\x1b[B', '\r'], stdinTTY = true, stdoutTTY = false, outputTTY = true,
   noColor = false, term = 'xterm-256color', shell = false, initial = 0,
-  raw = false, flowing = false, confirm = false, defaultOutput = false, sequence = false, accounts = {}, status = 0, columns = 0 } = {}) {
+  raw = false, flowing = false, confirm = false, defaultOutput = false, sequence = false, accounts = {}, status = 0, columns = 0, rows = 0 } = {}) {
   const env = { ...process.env, TERM: term };
   delete env.FORCE_COLOR;
   if (noColor) env.NO_COLOR = '1';
@@ -85,6 +85,7 @@ function runPicker({ keys = ['\x1b[B', '\r'], stdinTTY = true, stdoutTTY = false
     Object.defineProperty(process.stdout, 'isTTY', { value: ${stdoutTTY} });
     Object.defineProperty(process.stderr, 'isTTY', { value: ${outputTTY} });
     ${columns ? `Object.defineProperty(process.stderr, 'columns', { value: ${columns} });` : ''}
+    ${rows ? `Object.defineProperty(process.stderr, 'rows', { value: ${rows} });` : ''}
     const listeners = input.listeners('data');
     const keyListeners = input.listeners('keypress');
     const encoding = input.readableEncoding;
@@ -197,6 +198,34 @@ describe('profile picker terminal output', () => {
     assert.match(result.stderr, /me@mail\.test · Pro/);
     assert.match(result.stderr, /No usage saved yet/);
     assert.match(result.stderr, /in use/);
+  });
+
+  describe('in a window shorter than the menu', () => {
+    // Every profile signed in: two detail lines and a blank rail under each, 18 rows in all.
+    const account = email => ({
+      oauthAccount: { emailAddress: email, organizationType: 'claude_max' },
+      cachedUsageUtilization: { fetchedAtMs: Date.now(), utilization: { five_hour: { utilization: 0 }, seven_day: { utilization: 26 } } },
+    });
+    const accounts = Object.fromEntries(choices.map(name => [name, account(`${name}@mail.test`)]));
+    const ups = output => [...output.matchAll(/\x1b\[(\d+)A/g)].map(match => Number(match[1]));
+
+    it('shows details only under the selected profile', () => {
+      const result = runPicker({ shell: true, accounts, rows: 12, keys: ['\x1b[B', '\x1b[B', '\x1b[B', '\x1b[A', '\r'] });
+      assert.equal(result.stdout, 'omlx\n');
+      // The cursor never has to go above the window, so nothing piles up in the scrollback.
+      assert.ok(Math.max(...ups(result.stderr)) < 12, ups(result.stderr).join(','));
+      const firstFrame = result.stderr.slice(0, result.stderr.search(/\x1b\[\d+A/));
+      assert.match(firstFrame, /work@mail\.test/);
+      assert.doesNotMatch(firstFrame, /personal@mail\.test/);
+    });
+
+    it('shows only the profiles around the selection when even that is too tall', () => {
+      const result = runPicker({ shell: true, accounts, rows: 10, keys: ['\x1b[B', '\x1b[B', '\x1b[B', '\r'] });
+      assert.equal(result.stdout, 'work2\n');
+      assert.ok(Math.max(...ups(result.stderr)) < 10, ups(result.stderr).join(','));
+      assert.match(result.stderr, /2 more below/);
+      assert.match(result.stderr, /2 more above/);
+    });
   });
 
   it('cancels with Esc and prints nothing on stdout', () => {

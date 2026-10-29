@@ -110,6 +110,7 @@ export async function select(message, choices, {
   return new Promise((resolve) => {
     let selected = Math.max(0, Math.min(initial, items.length - 1));
     let height = 0;
+    let top = 0;
     const cursor = cursorControl(output);
     const rail = color.dim(sym.rail);
     const indent = ' '.repeat(numbered ? 5 : 2);
@@ -117,17 +118,22 @@ export async function select(message, choices, {
       ? t(back ? 'prompt.keysNumberedBack' : 'prompt.keysNumbered', { arrows: sym.arrows, max: items.length })
       : t(back ? 'prompt.keysBack' : 'prompt.keys', { arrows: sym.arrows });
 
-    const rows = () => {
+    // The choices from index from up to to, with details under the ones detailed(i) picks.
+    const rows = (detailed = () => true, from = 0, to = items.length) => {
       const lines = [];
-      items.forEach((item, i) => {
+      if (from > 0) lines.push(`${rail}  ${color.dim(t('prompt.moreAbove', { count: from }))}`);
+      items.slice(from, to).forEach((item, offset) => {
+        const i = from + offset;
         const number = numbered ? `${i + 1}  ` : '';
         const head = i === selected
           ? color.cyan(`${sym.cursor} ${number}${item.label}`)
           : `  ${numbered ? `${color.dim(String(i + 1))}  ` : ''}${item.label}`;
         lines.push(`${rail}  ${head}${item.hint ? `  ${item.hint}` : ''}`);
-        for (const detail of item.details ?? []) lines.push(`${rail}  ${indent}${detail}`);
-        if (item.details?.length) lines.push(rail);
+        if (!detailed(i) || !item.details?.length) return;
+        for (const detail of item.details) lines.push(`${rail}  ${indent}${detail}`);
+        lines.push(rail);
       });
+      if (to < items.length) lines.push(`${rail}  ${color.dim(t('prompt.moreBelow', { count: items.length - to }))}`);
       lines.push(`${rail}  ${color.dim(keys)}`, color.dim(sym.railEnd));
       return lines;
     };
@@ -137,10 +143,32 @@ export async function select(message, choices, {
       + Math.max(1, Math.ceil(displayWidth(line) / (output.columns || Infinity))), 0);
     const header = [`${color.cyan(sym.step)}  ${message}`, ...body.map(line => `${rail}  ${line}`)];
 
+    // The cursor can't move up past the top of the window, so a menu taller than the window
+    // can't be redrawn in place: every redraw would push another copy of its first rows into
+    // the scrollback. It shrinks to fit instead: details only under the selected choice, then
+    // only the choices around it. The row under the menu is where the cursor waits.
+    const fits = lines => screenRows(header) + screenRows(lines) < (output.rows || Infinity);
+    const layout = () => {
+      const full = rows();
+      if (fits(full)) return full;
+      const shown = (from, to) => rows(i => i === selected, from, to);
+      if (fits(shown(0, items.length))) return shown(0, items.length);
+      const end = from => {
+        let to = Math.max(from, selected) + 1;
+        while (to < items.length && fits(shown(from, to + 1))) to++;
+        return to;
+      };
+      top = Math.min(top, selected);
+      while (top < selected && !fits(shown(top, end(top)))) top++;
+      return shown(top, end(top));
+    };
+
     const render = () => {
       if (height) output.write(cursor.up(height));
-      const lines = rows();
+      const lines = layout();
       for (const line of lines) output.write(`${cursor.clearLine}${line}\n`);
+      // A shorter menu than last time leaves old rows below it.
+      output.write(cursor.clearDown);
       height = screenRows(lines);
     };
 

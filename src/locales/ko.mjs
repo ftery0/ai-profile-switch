@@ -6,6 +6,8 @@ export default {
   'prompt.keysNumbered': '{arrows} 이동 · 1-{max} 바로 선택 · Enter 선택 · Esc 취소',
   'prompt.keysBack': '{arrows} 이동 · Enter 선택 · Esc 뒤로',
   'prompt.keysNumberedBack': '{arrows} 이동 · 1-{max} 바로 선택 · Enter 선택 · Esc 뒤로',
+  'prompt.moreAbove': '위에 {count}개 더',
+  'prompt.moreBelow': '아래에 {count}개 더',
   'prompt.cancelled': '취소했어요',
   'prompt.yes': '예',
   'prompt.no': '아니요',
