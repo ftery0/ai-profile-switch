@@ -1,0 +1,69 @@
+name: Bug report
+description: Something doesn't work as described.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Before you post, remove emails, tokens, and anything from your Keychain or `.credentials.json`.
+        Security problems go to [SECURITY.md](https://github.com/ftery0/ai-profile-switch/blob/main/SECURITY.md), not to an issue.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run `cpf`
+        2. Choose …
+        3. See …
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Terminal output
+      description: Paste what the terminal printed, if anything.
+      render: text
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - macOS
+        - Linux
+        - WSL
+        - Windows
+    validations:
+      required: true
+  - type: dropdown
+    id: shell
+    attributes:
+      label: Shell
+      options:
+        - zsh
+        - bash
+        - fish
+        - PowerShell 7
+        - Windows PowerShell 5.1
+        - cmd
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: ai-profile-switch version
+      description: Leave it empty if you're not sure.
+      placeholder: "2.2.1"
+  - type: input
+    id: versions
+    attributes:
+      label: Claude Code and Node.js versions
+      description: Output of `claude --version` and `node --version`.
+      placeholder: "2.1.310, v22.11.0"

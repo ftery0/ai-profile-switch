@@ -1,0 +1,38 @@
+name: Support another AI CLI
+description: Ask for, or offer to build, profile switching for another AI coding CLI.
+title: "feat: support <tool name>"
+labels: [new tool, help wanted]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please read [#23](https://github.com/ftery0/ai-profile-switch/issues/23) first. It explains what a tool needs and lists the tools already being looked at.
+        Fill in what you know. "Not sure" is a fine answer.
+  - type: input
+    id: tool
+    attributes:
+      label: Tool
+      description: Name and a link to its docs or repository.
+    validations:
+      required: true
+  - type: textarea
+    id: storage
+    attributes:
+      label: Where does it keep settings and sign-in?
+      description: Folders, files, or the OS keychain, on macOS, Linux and Windows.
+  - type: textarea
+    id: switch
+    attributes:
+      label: Can it be pointed at another folder?
+      description: For example an environment variable like `CLAUDE_CONFIG_DIR` or `CODEX_HOME`, a flag, or only by changing `HOME`.
+  - type: textarea
+    id: share
+    attributes:
+      label: What could profiles share?
+      description: Settings, instructions files, skills… and what must stay per profile.
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Contributing
+      options:
+        - label: I'd like to help build this.

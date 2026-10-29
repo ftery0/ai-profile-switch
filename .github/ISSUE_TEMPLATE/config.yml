@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://ftery0.github.io/ai-profile-switch/
+    about: Install guides, commands, and how profiles work.
+  - name: Report a security problem
+    url: https://github.com/ftery0/ai-profile-switch/blob/main/SECURITY.md
+    about: Please report it privately, not in a public issue.

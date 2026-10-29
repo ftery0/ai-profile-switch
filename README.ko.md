@@ -89,4 +89,8 @@ npx ai-profile-switch@latest install-shell   # 셸 명령 고치기·새로 깔�
 - 플랫폼별 안내: [macOS](docs/setup-macos.ko.md) · [Linux](docs/setup-linux.ko.md) · [Windows](docs/setup-windows.ko.md)
 - 이 소스를 직접 쓰려면 레포 폴더에서 `node bin/cli.mjs install-shell` 을 실행합니다.
 
+## 기여하기
+
+버그 신고, 수정, 문서, 다른 AI 코딩 CLI 지원 모두 환영합니다. [CONTRIBUTING.md](CONTRIBUTING.md)(영어)를 먼저 읽고, [good first issue](https://github.com/ftery0/ai-profile-switch/labels/good%20first%20issue) 나 [new tool](https://github.com/ftery0/ai-profile-switch/labels/new%20tool) 라벨이 붙은 이슈에서 골라 주세요. 이슈와 PR 은 영어로 씁니다. 보안 문제는 공개 이슈 대신 [SECURITY.md](SECURITY.md) 에 적힌 대로 알려 주세요.
+
 [MIT](./LICENSE)

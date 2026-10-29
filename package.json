@@ -34,6 +34,10 @@
     "type": "git",
     "url": "git+https://github.com/ftery0/ai-profile-switch.git"
   },
+  "bugs": {
+    "url": "https://github.com/ftery0/ai-profile-switch/issues"
+  },
+  "homepage": "https://ftery0.github.io/ai-profile-switch/",
   "devDependencies": {
     "vitepress": "^1.6.4"
   },

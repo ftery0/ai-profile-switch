@@ -89,4 +89,8 @@ Coming from `claude-account-switch` or 1.x? Run `npx ai-profile-switch@latest in
 - Platform guides: [macOS](docs/setup-macos.md) · [Linux](docs/setup-linux.md) · [Windows](docs/setup-windows.md)
 - To use this source checkout, run `node bin/cli.mjs install-shell` from the repository root.
 
+## Contributing
+
+Bug reports, fixes, docs, and support for more AI coding CLIs are all welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), then pick an issue labeled [good first issue](https://github.com/ftery0/ai-profile-switch/labels/good%20first%20issue) or [new tool](https://github.com/ftery0/ai-profile-switch/labels/new%20tool). Please report security problems privately, as described in [SECURITY.md](SECURITY.md).
+
 [MIT](./LICENSE)
