@@ -6,6 +6,8 @@ export default {
   'prompt.keysNumbered': '{arrows} move · 1-{max} pick · Enter select · Esc cancel',
   'prompt.keysBack': '{arrows} move · Enter select · Esc back',
   'prompt.keysNumberedBack': '{arrows} move · 1-{max} pick · Enter select · Esc back',
+  'prompt.moreAbove': '{count} more above',
+  'prompt.moreBelow': '{count} more below',
   'prompt.cancelled': 'cancelled',
   'prompt.yes': 'Yes',
   'prompt.no': 'No',
