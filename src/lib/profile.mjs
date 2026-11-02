@@ -231,6 +231,37 @@ function validateJson(source) {
   }
 }
 
+// Claude Code saves absolute paths in its plugin indexes. Copied as they are, a profile would keep
+// loading plugins from the source folder and break once that folder is removed.
+const PLUGIN_INDEXES = ['installed_plugins.json', 'known_marketplaces.json'];
+
+function repointPlugins(plugins, sourceDir, targetDir) {
+  if (!pathExists(plugins) || !lstatSync(plugins).isDirectory()) return;
+  const to = join(targetDir, 'plugins');
+  const prefixes = [...new Set([join(sourceDir, 'plugins'), join(canonicalPath(sourceDir), 'plugins')])];
+  const move = value => {
+    if (typeof value === 'string') {
+      const from = prefixes.find(prefix => value === prefix
+        || value.startsWith(prefix + sep) || value.startsWith(prefix + '/'));
+      return from ? to + value.slice(from.length) : value;
+    }
+    if (Array.isArray(value)) return value.map(move);
+    if (value && typeof value === 'object') {
+      return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, move(item)]));
+    }
+    return value;
+  };
+  for (const name of PLUGIN_INDEXES) {
+    const path = join(plugins, name);
+    if (!pathExists(path) || !lstatSync(path).isFile()) continue;
+    const text = readFileSync(path, 'utf8');
+    let index;
+    try { index = JSON.parse(text); } catch { continue; }
+    const moved = JSON.stringify(move(index), null, 2);
+    if (moved !== JSON.stringify(index, null, 2)) writeFileSync(path, moved + '\n');
+  }
+}
+
 function stageEntry(source, destination) {
   if (!pathExists(source)) return;
   if (pathExists(destination)) {
@@ -293,6 +324,7 @@ function prepareMigration(source, profileName, shareSettings, stage) {
     stageEntry(join(source.directory, entry), join(stagedProfile, entry));
     if (!pathExists(join(stagedProfile, entry))) mkdirSync(join(stagedProfile, entry));
   }
+  repointPlugins(join(stagedProfile, 'plugins'), source.directory, target);
   for (const entry of [...SHARED_FILES, ...SHARED_DIRS]) {
     const shared = shareSettings ? stagedShared : stagedProfile;
     const from = join(source.directory, entry);
