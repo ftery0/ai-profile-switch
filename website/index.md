@@ -1,7 +1,7 @@
 ---
 layout: home
 title: ai-profile-switch — Multi-account Profile Manager for Claude Code
-description: Manage multiple Claude Code accounts with ease. Switch between work and personal profiles instantly using CLAUDE_CONFIG_DIR.
+description: Keep work and personal Claude Code accounts on one machine. Pick one each time you run claude; each keeps its own sign-in, history and settings.
 jsonLd:
   "@context": "https://schema.org"
   "@type": "SoftwareApplication"
@@ -22,27 +22,49 @@ jsonLd:
 
 hero:
   name: ai-profile-switch
-  text: Multi-account Profile Manager for Claude Code
-  tagline: Switch between work and personal Claude Code accounts instantly. Zero dependencies.
+  text: Pick an account.<br>That's it.
+  tagline: Keep work and personal Claude Code accounts on one machine. Each has its own sign-in, history and settings.
   actions:
     - theme: brand
-      text: Get Started
+      text: Get started
       link: /guide/
     - theme: alt
-      text: View on GitHub
+      text: GitHub
       link: https://github.com/ftery0/ai-profile-switch
 
 features:
-  - title: One-Command Setup
-    details: Create profiles, safely import existing configuration and install the local shell runtime.
-  - title: Instant Profile Switching
-    details: Use cpf <name> to switch profiles in milliseconds. No restart needed.
-  - title: Zero Dependencies
-    details: Uses only Node.js built-in modules for instant npx startup. No bloat.
-  - title: Cross-Platform
-    details: Works on macOS, Linux, and Windows (native + WSL). Supports zsh, bash, fish, and PowerShell.
-  - title: Shared Settings
-    details: Settings and custom commands are shared across all profiles via symlinks.
-  - title: Interactive Picker
-    details: Use claude-pick to select profiles with arrow-key navigation.
+  - title: Pick when you start
+    details: Run <code>claude</code> and choose a profile. Each one shows its email, plan and recent usage first.
+  - title: Nothing mixes
+    details: Sign-in, history and projects stay in their own profile. Switching never touches the others.
+  - title: Share what you want
+    details: Settings are shared from the start. Add <code>CLAUDE.md</code>, skills and more with <code>cpf share add</code>.
 ---
+
+<div class="home-steps">
+
+## Up and running in a minute
+
+<ol class="steps">
+  <li>
+    <b>Install</b>
+    <span>Type profile names such as <code>work, personal</code>. Your current <code>~/.claude</code> can come along.</span>
+    <code class="cmd">npx ai-profile-switch@latest init</code>
+  </li>
+  <li>
+    <b>Open a new terminal and run Claude</b>
+    <span>With one profile it starts right away. With more, you pick.</span>
+    <code class="cmd">claude</code>
+  </li>
+  <li>
+    <b>Switch or manage any time</b>
+    <span>Rename, sign in again, check usage or share settings.</span>
+    <code class="cmd">cpf</code>
+  </li>
+</ol>
+
+<figure class="demo">
+  <img src="/demo.gif" alt="Running claude and picking a profile, switching with cpf, and sharing CLAUDE.md with cpf share" width="865" height="518" loading="lazy">
+</figure>
+
+</div>
