@@ -16,6 +16,7 @@
   },
   "scripts": {
     "test": "node --test",
+    "test:e2e": "bash test/e2e/single-user/run.sh",
     "docs:dev": "vitepress dev website",
     "docs:build": "vitepress build website",
     "docs:preview": "vitepress preview website"
