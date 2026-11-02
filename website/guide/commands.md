@@ -5,8 +5,6 @@ description: Profile management, safe import and version 2 compatibility.
 
 # Commands and Migration
 
-These instructions describe the repository source. The management menu and renaming need this source or a release containing them; the currently published npm package may not include them. To use this checkout, run `node bin/cli.mjs install-shell` from the repository root and open a new terminal.
-
 ## Manage profiles with cpf
 
 Enter `cpf` at the **terminal shell prompt** (`%` or `$`) to open the interactive menu. If Claude's chat is open, enter `/exit` **in Claude** first and wait for the terminal prompt. Typing `cpf` in Claude's chat sends a message instead of running a shell command.

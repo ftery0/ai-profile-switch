@@ -61,6 +61,7 @@ docs/                    Older platform guides linked from the README
 ## Tests
 
 - `npm test` runs every test. Run one file with `node --test test/profile.test.mjs`.
+- `npm run test:e2e` needs Docker. It packs this checkout and, in a clean container with the real Claude Code, plays a person who used one `~/.claude`: first setup, then `claude` and `cpf` in bash, zsh and fish.
 - Start every test file with `import './helpers/home.mjs';`. It points `HOME`, temp folders, npm and git at a throwaway folder, turns off automatic updates, sets the language to English, and puts a fake `claude` first on `PATH` so a test can never start the real one.
 - Pull requests run the tests on Linux, macOS and Windows with Node 18 to 26, and check the shell integration in bash, zsh, fish, PowerShell and cmd. See `.github/workflows/test-platforms.yml`. To run the shell check locally, use `node test/cross-shell-smoke.mjs --shell=/bin/zsh`.
 - If the `validateProfileName` tests fail on your machine, that's [#16](https://github.com/ftery0/ai-profile-switch/issues/16).

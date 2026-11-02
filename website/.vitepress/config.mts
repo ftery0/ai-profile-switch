@@ -1,6 +1,23 @@
 import { defineConfig, type HeadConfig } from 'vitepress'
 
 const siteUrl = 'https://ftery0.github.io/ai-profile-switch'
+const base = '/ai-profile-switch/'
+const pretendard = 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css'
+
+// VitePress's default heading ids, then NFC: the default NFKD step splits each Hangul syllable
+// into jamo, so a hand-written link such as #기존-설정-가져오기 never matched its heading.
+function slugify(str: string) {
+  return str
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036F]/g, '')
+    .replace(/[\u0000-\u001f]/g, '')
+    .replace(/[\s~`!@#$%^&*()\-_+=[\]{}|\\;:"'“”‘’<>,.?/]+/g, '-')
+    .replace(/-{2,}/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .replace(/^(\d)/, '_$1')
+    .toLowerCase()
+    .normalize('NFC')
+}
 
 function guideSidebar(prefix = '') {
   return [
@@ -29,13 +46,23 @@ export default defineConfig({
   title: 'ai-profile-switch',
   description: 'Multi-account profile manager for Claude Code',
   cleanUrls: true,
-  base: '/ai-profile-switch/',
+  base,
+
+  markdown: {
+    anchor: { slugify },
+  },
 
   sitemap: {
     hostname: 'https://ftery0.github.io/ai-profile-switch/',
   },
 
   head: [
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: `${base}favicon.svg` }],
+    ['link', { rel: 'apple-touch-icon', href: `${base}apple-touch-icon.png` }],
+    ['meta', { name: 'theme-color', media: '(prefers-color-scheme: light)', content: '#ffffff' }],
+    ['meta', { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: '#17171c' }],
+    ['link', { rel: 'preconnect', href: 'https://cdn.jsdelivr.net', crossorigin: '' }],
+    ['link', { rel: 'stylesheet', href: pretendard }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: 'ai-profile-switch' }],
     ['meta', { property: 'og:image', content: `${siteUrl}/og-image.png` }],
@@ -75,6 +102,7 @@ export default defineConfig({
   },
 
   themeConfig: {
+    logo: '/logo.svg',
     socialLinks: [
       { icon: 'github', link: 'https://github.com/ftery0/ai-profile-switch' },
     ],

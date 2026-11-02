@@ -261,6 +261,7 @@ Without the shell commands, use: npx ai-profile-switch@latest manage [arguments]
     update [--check]           Update this tool; --check only checks
     share [add|remove]         Share CLAUDE.md, skills, agents, … across profiles
     mcp [list]                 Show where old MCP settings went
+    --version, -v              Show the installed version
 
   Run any command with --help for its usage.
 `,

@@ -42,6 +42,7 @@ Run these at the terminal prompt. If you are in the Claude chat, enter `/exit` f
 - Switching applies to the next launch. Running sessions keep their account.
 - In scripts, `claude` uses the active profile without asking.
 - At a Bash or zsh prompt, `command claude` runs the original Claude without a profile.
+- IDE extensions (VS Code, JetBrains) and the desktop app don't go through the shell, so they keep using the default `~/.claude`.
 
 ## Share settings across profiles
 

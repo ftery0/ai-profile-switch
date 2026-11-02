@@ -1,0 +1,256 @@
+/*
+ * Site colors, type and shapes on top of the VitePress default theme.
+ * Flat surfaces, one blue, Pretendard. Body text keeps at least 4.5:1 contrast in both modes.
+ */
+
+:root {
+  --vp-font-family-base: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+    'Apple SD Gothic Neo', 'Noto Sans KR', 'Segoe UI', sans-serif;
+
+  --vp-c-bg: #ffffff;
+  --vp-c-bg-alt: #f9fafb;
+  --vp-c-bg-elv: #ffffff;
+  --vp-c-bg-soft: #f2f4f6;
+
+  --vp-c-text-1: #191f28;
+  --vp-c-text-2: #4e5968;
+  --vp-c-text-3: #5f6873;
+
+  --vp-c-divider: #e5e8eb;
+  --vp-c-border: #d1d6db;
+  --vp-c-gutter: #e5e8eb;
+
+  --vp-c-brand-1: #1b64da;
+  --vp-c-brand-2: #1957c2;
+  --vp-c-brand-3: #3182f6;
+  --vp-c-brand-soft: rgba(49, 130, 246, 0.1);
+
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-text: #ffffff;
+  --vp-button-brand-bg: #1b64da;
+  --vp-button-brand-hover-border: transparent;
+  --vp-button-brand-hover-text: #ffffff;
+  --vp-button-brand-hover-bg: #1957c2;
+  --vp-button-brand-active-border: transparent;
+  --vp-button-brand-active-text: #ffffff;
+  --vp-button-brand-active-bg: #1957c2;
+  --vp-button-alt-border: transparent;
+  --vp-button-alt-bg: var(--vp-c-bg-soft);
+  --vp-button-alt-hover-border: transparent;
+  --vp-button-alt-active-border: transparent;
+
+  --vp-home-hero-name-color: var(--vp-c-brand-1);
+
+  --aps-sheet-bg: #ffffff;
+  --aps-sheet-shadow: 0 8px 40px rgba(0, 27, 55, 0.08);
+  --aps-blue-soft: #e8f3ff;
+  --aps-blue-text: #1b64da;
+  --aps-green-soft: #e5f8ee;
+  --aps-green-text: #028a52;
+  --aps-orange-soft: #fff3e0;
+  --aps-orange-text: #c2410c;
+}
+
+.dark {
+  --vp-c-bg: #17171c;
+  --vp-c-bg-alt: #101013;
+  --vp-c-bg-elv: #202027;
+  --vp-c-bg-soft: #202027;
+
+  --vp-c-text-1: #ffffff;
+  --vp-c-text-2: #c3c3c6;
+  --vp-c-text-3: #9e9ea4;
+
+  --vp-c-divider: #2c2c35;
+  --vp-c-border: #3c3c47;
+  --vp-c-gutter: #101013;
+
+  --vp-c-brand-1: #64a8ff;
+  --vp-c-brand-2: #4593fc;
+  --vp-c-brand-3: #3182f6;
+  --vp-c-brand-soft: rgba(49, 130, 246, 0.18);
+
+  --vp-code-block-bg: #101013;
+
+  --aps-sheet-bg: var(--vp-c-bg-soft);
+  --aps-sheet-shadow: none;
+  --aps-blue-soft: rgba(49, 130, 246, 0.2);
+  --aps-blue-text: #64a8ff;
+  --aps-green-soft: rgba(3, 178, 108, 0.2);
+  --aps-green-text: #3fd08f;
+  --aps-orange-soft: rgba(254, 152, 0, 0.2);
+  --aps-orange-text: #ffb340;
+}
+
+/* Buttons and cards: rounder, no outlines. */
+.VPButton {
+  border-radius: 14px !important;
+}
+
+.VPFeature {
+  border: none !important;
+  border-radius: 20px !important;
+  background-color: var(--vp-c-bg-soft) !important;
+}
+
+.VPFeature .title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.vp-doc div[class*='language-'],
+.vp-doc .custom-block {
+  border-radius: 14px;
+}
+
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3 {
+  letter-spacing: -0.025em;
+}
+
+/* Home hero: the product name as a small label over the headline. */
+.VPHero .heading .name {
+  margin-bottom: 14px;
+  font-size: 18px !important;
+  line-height: 24px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em;
+}
+
+.VPHero .heading .text {
+  font-weight: 700 !important;
+  letter-spacing: -0.035em;
+}
+
+.VPHero .main .tagline {
+  color: var(--vp-c-text-3) !important;
+  letter-spacing: -0.015em;
+}
+
+.VPHero .install {
+  margin: 20px 0 0;
+  color: var(--vp-c-text-3);
+  font-family: var(--vp-font-family-mono);
+  font-size: 14px;
+}
+
+.VPHero .install code {
+  color: var(--vp-c-text-2);
+}
+
+/* The hero picture is the account picker, not a small logo: give it its own size. */
+.VPHero.has-image .image {
+  order: 3;
+  margin: 40px 0 0;
+}
+
+.VPHero.has-image .image-container {
+  width: auto;
+  height: auto;
+  transform: none;
+}
+
+@media (min-width: 960px) {
+  .VPHero.has-image .image {
+    margin: 0 0 0 48px;
+  }
+}
+
+/* Korean wraps between words, not inside them. */
+html:lang(ko) {
+  word-break: keep-all;
+}
+
+/* Home: three steps and the demo under the feature cards. */
+.home-steps {
+  max-width: 1152px;
+  margin: 72px auto 24px;
+}
+
+.vp-doc .home-steps h2 {
+  margin: 0 0 24px;
+  padding: 0;
+  border: none;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.vp-doc .home-steps .steps {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+@media (min-width: 768px) {
+  .vp-doc .home-steps .steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.vp-doc .home-steps .steps li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 24px;
+  border-radius: 20px;
+  background: var(--vp-c-bg-soft);
+  counter-increment: step;
+}
+
+.vp-doc .home-steps .steps li::before {
+  content: counter(step);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-bottom: 4px;
+  border-radius: 50%;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.vp-doc .home-steps .steps b {
+  font-size: 17px;
+  letter-spacing: -0.02em;
+  color: var(--vp-c-text-1);
+}
+
+.vp-doc .home-steps .steps span {
+  flex: 1;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--vp-c-text-2);
+}
+
+.vp-doc .home-steps .steps .cmd {
+  display: block;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--vp-code-block-bg);
+  color: var(--vp-c-text-1);
+  font-size: 13px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.vp-doc .home-steps .demo {
+  margin: 40px 0 0;
+}
+
+.vp-doc .home-steps .demo img {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  background: #101013;
+}

@@ -1,9 +1,16 @@
 import DefaultTheme from 'vitepress/theme'
 import { useRoute } from 'vitepress'
-import { onMounted, watch, nextTick } from 'vue'
+import { h, onMounted, watch, nextTick } from 'vue'
+import AccountSheet from './AccountSheet.vue'
+import './custom.css'
 
 export default {
   extends: DefaultTheme,
+  // The home hero shows the install command under its buttons and the picker beside them.
+  Layout: () => h(DefaultTheme.Layout, null, {
+    'home-hero-actions-after': () => h('p', { class: 'install' }, ['$ ', h('code', 'npx ai-profile-switch@latest init')]),
+    'home-hero-image': () => h(AccountSheet),
+  }),
   setup() {
     const route = useRoute()
 

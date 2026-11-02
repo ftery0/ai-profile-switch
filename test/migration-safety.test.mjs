@@ -97,6 +97,34 @@ describe('migration data coverage and recovery backups', () => {
     assert.deepEqual(stages(), []);
   });
 
+  it('points copied plugin indexes at the profile, not the source folder', () => {
+    const path = source();
+    const plugins = join(path, 'plugins');
+    const installed = {
+      version: 2,
+      plugins: { 'lsp@market': [{ scope: 'user', installPath: join(plugins, 'cache', 'market', 'lsp', '1.0.0') }] },
+    };
+    const marketplaces = {
+      market: { source: { source: 'github', repo: 'owner/market' }, installLocation: join(plugins, 'marketplaces', 'market') },
+      elsewhere: { installLocation: join(HOME, 'elsewhere', 'plugins') },
+    };
+    write(join(plugins, 'installed_plugins.json'), JSON.stringify(installed));
+    write(join(plugins, 'known_marketplaces.json'), JSON.stringify(marketplaces));
+    write(join(plugins, 'cache', 'market', 'lsp', '1.0.0', 'plugin.json'), '{}');
+    const original = snapshot(path);
+
+    migrateDir(path, 'work', false);
+
+    const copied = join(profileDir('work'), 'plugins');
+    const read = name => JSON.parse(readFileSync(join(copied, name), 'utf8'));
+    assert.equal(read('installed_plugins.json').plugins['lsp@market'][0].installPath,
+      join(copied, 'cache', 'market', 'lsp', '1.0.0'));
+    assert.equal(read('known_marketplaces.json').market.installLocation, join(copied, 'marketplaces', 'market'));
+    assert.equal(read('known_marketplaces.json').elsewhere.installLocation, join(HOME, 'elsewhere', 'plugins'),
+      'paths outside the source plugins folder stay as they are');
+    assert.deepEqual(snapshot(path), original, 'the source indexes are not rewritten');
+  });
+
   it('retains the original shared and profile data with a private path mapping', () => {
     createProfile('work');
     write(join(profileDir('work'), '.credentials.json'), '{"fixture":"original credential"}');
