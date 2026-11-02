@@ -42,6 +42,7 @@ npx ai-profile-switch@latest init
 - 전환은 다음 실행부터 적용됩니다. 이미 켜진 세션은 원래 계정을 그대로 씁니다.
 - 스크립트에서는 `claude` 가 묻지 않고 지금 프로필로 실행합니다.
 - Bash·zsh 프롬프트에서 `command claude` 를 치면 프로필 없이 원래 Claude 가 실행됩니다.
+- IDE 확장(VS Code, JetBrains)과 데스크톱 앱은 셸을 거치지 않아 기본 `~/.claude` 를 계속 씁니다.
 
 ## 프로필끼리 설정 나누기
 

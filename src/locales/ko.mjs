@@ -261,6 +261,7 @@ claude 를 실행하면 프로필을 골라 Claude Code 를 시작해요.
     update [--check]           이 도구 업데이트 (--check 는 확인만)
     share [add|remove]         CLAUDE.md·skills·agents 등을 같이 쓰기
     mcp [list]                 예전 MCP 설정이 어디로 갔는지 보기
+    --version, -v              설치된 버전 보기
 
   명령 뒤에 --help 를 붙이면 사용법이 나와요.
 `,

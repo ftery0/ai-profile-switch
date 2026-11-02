@@ -32,6 +32,8 @@ description: 로컬 실행 파일, 프로필 선택과 기존 실행 훅.
 
 `--help`, `--version`, 공백을 포함한 인자와 종료 코드를 전달합니다. 환경의 `CLAUDE_CONFIG_DIR`은 Claude 자식 프로세스에만 설정됩니다.
 
+IDE 확장(VS Code, JetBrains)과 데스크톱 앱은 셸의 `claude` 명령을 거치지 않고 Claude 를 직접 실행합니다. 그래서 기본 `~/.claude`(또는 편집기가 시작될 때의 `CLAUDE_CONFIG_DIR`)를 계속 쓰므로, 그쪽 로그인은 따로 합니다. 원래 `~/.claude` 는 옮기지 않으므로 지금처럼 그대로 동작합니다.
+
 ## 설치·복구
 
 npm 배포 버전을 사용하려면:

@@ -32,6 +32,8 @@ With multiple profiles, interactive `claude` shows a picker with the active prof
 
 Arguments including `--help`, `--version` and spaces, as well as exit status, pass through. `CLAUDE_CONFIG_DIR` is set only in the Claude child process.
 
+IDE extensions (VS Code, JetBrains) and the desktop app start Claude themselves, not through the shell's `claude` command. They keep using the default `~/.claude`, or whatever `CLAUDE_CONFIG_DIR` the editor was started with, so sign in there separately. Your original `~/.claude` is never moved, so they keep working as before.
+
 ## Installation and repair
 
 For the published npm version:
