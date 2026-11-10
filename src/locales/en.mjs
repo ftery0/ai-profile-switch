@@ -28,6 +28,7 @@ export default {
   'account.weekly': 'Weekly',
   'account.noUsage': 'No usage saved yet',
   'account.savedAt': 'as of {time}',
+  'account.reset': 'reset',
   'account.notSignedIn': 'Not signed in yet',
 
   'profile.empty': 'Profile name cannot be empty',
