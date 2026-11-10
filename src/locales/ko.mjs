@@ -28,6 +28,7 @@ export default {
   'account.weekly': '주간',
   'account.noUsage': '아직 저장된 사용량 없음',
   'account.savedAt': '{time} 기준',
+  'account.reset': '초기화됨',
   'account.notSignedIn': '아직 로그인하지 않았어요',
 
   'profile.empty': '프로필 이름을 적어 주세요',

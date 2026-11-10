@@ -1,7 +1,7 @@
 import * as prompt from '../lib/prompt.mjs';
 import { readMeta } from '../lib/config.mjs';
 import { color, displayWidth, error, intro, sym, warn } from '../lib/ui.mjs';
-import { accountInfo } from '../lib/account.mjs';
+import { accountInfo, refreshUsage } from '../lib/account.mjs';
 import { HOME } from '../lib/constants.mjs';
 import { LANGUAGE_NAMES, language as currentLanguage, relativeTime, t } from '../lib/i18n.mjs';
 import { checkRename, profileDir } from '../lib/profile.mjs';
@@ -74,7 +74,8 @@ export async function manage(args = []) {
   }
 }
 
-function pickProfile(question, meta) {
+async function pickProfile(question, meta) {
+  await refreshUsage(meta.profiles);
   return prompt.select(question, profileChoices(meta.profiles, meta.activeProfile), {
     initial: Math.max(0, meta.profiles.indexOf(meta.activeProfile)), numbered: true, back: true,
   });

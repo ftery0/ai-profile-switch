@@ -7,7 +7,7 @@ import { HOME, IS_WINDOWS } from '../lib/constants.mjs';
 import { installAllShells } from '../lib/shell.mjs';
 import { listProfiles, profileDir, assertRegisteredProfile } from '../lib/profile.mjs';
 import { color, colorFor, intro, meter, outro, success, sym, userError, warn } from '../lib/ui.mjs';
-import { accountInfo } from '../lib/account.mjs';
+import { accountInfo, refreshUsage } from '../lib/account.mjs';
 import { relativeTime, t } from '../lib/i18n.mjs';
 import { syncShared } from '../lib/shared.mjs';
 import { reportConflicts } from './share.mjs';
@@ -118,8 +118,9 @@ export function accountSummary({ email, plan }) {
 export function usageLine({ usage }) {
   if (!usage) return color.dim(t('account.noUsage'));
   const parts = [];
-  if (usage.fiveHour !== null) parts.push(`${t('account.fiveHour')} ${meter(usage.fiveHour)}`);
-  if (usage.weekly !== null) parts.push(`${t('account.weekly')} ${meter(usage.weekly)}`);
+  const reset = key => (usage.reset?.[key] ? ` ${color.dim(t('account.reset'))}` : '');
+  if (usage.fiveHour !== null) parts.push(`${t('account.fiveHour')} ${meter(usage.fiveHour)}${reset('fiveHour')}`);
+  if (usage.weekly !== null) parts.push(`${t('account.weekly')} ${meter(usage.weekly)}${reset('weekly')}`);
   if (usage.savedAt) parts.push(color.dim(t('account.savedAt', { time: relativeTime(usage.savedAt) })));
   return parts.join('   ');
 }
@@ -162,6 +163,7 @@ async function selectProfile({ launching = false } = {}) {
     }
     return selected;
   }
+  await refreshUsage(profiles);
   const choices = profileChoices(profiles, active);
   intro('ai-profile-switch', '', output);
   const selected = await prompt.select(t('picker.question'), choices, {
