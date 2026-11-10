@@ -1,6 +1,6 @@
 {
   "name": "ai-profile-switch",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Profile switching for AI coding CLIs, starting with Claude Code (formerly claude-account-switch)",
   "type": "module",
   "bin": {
